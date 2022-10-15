@@ -1,0 +1,66 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "vpc,igw,subnet",
+    "Metadata": {
+
+    },
+    "Parameters": {
+      "VPCcidr": {
+          "Description": "this cidr is for my vpc",
+          "Type": "String",
+          "Default": "10.0.0.0/16"
+      },
+      "AVZ": {
+          "Description": "This availability zone is for subnet",
+          "Type": "String",
+          "Default": "AWS::EC2::AvailabilityZone::Name"
+      },
+      "Subnetcidr": {
+          "Description": "This cidr is for subnet",
+          "Type": "String",
+          "Default": "11.0.0.0/24"
+      }
+
+    },
+    "Mappings": {
+
+    },
+    "Conditions": {
+
+    },
+    "Resources": {
+      "VPC": {
+        "Type": "AWS::EC2::VPC",
+        "Properties": {
+          "CidrBlock": { "Ref": "VPCcidr" },
+          "Tags": [{ "Key": "Name", "Value":  "VPC" }]
+        }
+      },
+      "IGW": {
+        "Type": "AWS::EC2::InternetGateway",
+        "Properties": {
+          "Tags": [{ "Key": "Name", "IGW": }]
+        }
+      },
+      "AttachGateway": {
+        "Type": "AWS::EC2::VPCGatewayAttachment",
+        "Properties": {
+          "VpcId": { "Ref": "VPC" },
+          "InternetGatewayId": { "Ref": "IGW" }
+        }
+      },
+      "subnet": {
+        "Type": "AWS::EC2::Subnet",
+        "Properties": {
+          "AvailabilityZone": { "Ref": "AVZ" },
+          "VpcId": { "Ref": "logicalName" },
+          "CidrBlock": { "Ref": "Subnetcidr" },
+          "Tags": [{ "Key": "Name", "Value":  "subnet" }]
+        }
+      }
+
+    },
+    "Outputs": {
+
+    }
+}
